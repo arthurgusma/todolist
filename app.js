@@ -1,34 +1,25 @@
-const express = require("express")
-const bodyParser = require("body-parser")
-const app = express()
+const express = require("express");
+const bodyParser = require("body-parser");
+const date = require(__dirname + "/date.js");
 
-let items = []
-let workItems = []
+const app = express();
 
-app.set("view engine", "ejs")
+let items = [];
+let workItems = [];
 
-app.use(bodyParser.urlencoded({extended: true}))
-app.use(express.static("public"))
+app.set("view engine", "ejs");
 
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(express.static("public"));
 
 app.get("/", (req, res) => {
-  const today = new Date()
-
-  const options = {
-    weekday: "long",
-    day: "numeric",
-    month: "long"
-  }
-
-  const day = today.toLocaleDateString("en-US", options)
-
-  res.render("list", {listTitle: day, newListItems: items})
-
-})
+  const day = date();
+  res.render("list", {listTitle: day, newListItems: items});
+});
 
 app.post("/", (req, res) => {
-  let item = req.body.newItem
-  console.log(req.body.list)
+  const item = req.body.newItem;
+  console.log(req.body.list);
 
   if (req.body.list === "Work") {
     workItems.push(item)
@@ -36,15 +27,13 @@ app.post("/", (req, res) => {
   } else {
     items.push(item)
     res.redirect("/")
-  }
-
-})
+  };
+});
 
 app.get("/work", (req, res) => {
-  res.render("list", {listTitle: "Work List", newListItems: workItems})
-})
-
+  res.render("list", {listTitle: "Work List", newListItems: workItems});
+});
 
 app.listen(3000, () => {
-  console.log("server running.")
-})
+  console.log("server running.");
+});
