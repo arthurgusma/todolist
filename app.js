@@ -19,54 +19,39 @@ app.use(express.static("public"));
 const itemSchema = {
   name: String
 };
+
 const Item = mongoose.model('Item', itemSchema);
+const items = [];
 
-const item1 = new Item({
-  name: 'Breakfast'
-});
-const item2 = new Item({
-  name: 'lunch'
-});
+const day = date.getDate();
 
-
-const defaultItems = [item1, item2]
-
-
-Item.insertMany(defaultItems, (err) => {
-  if (err) {
-    console.log(err);
-  } else {
-    console.log('Sucessfuly added.');
-  }
-});
-
-app.get("/", (req, res) => {
-  const day = date.getDate();
-  res.render("list", {
-    listTitle: day,
-    newListItems: defaultItems
+app.get('/', (req, res) => {
+  Item.find({}, (err, found) => {
+    res.render('list', {
+      listTitle: day,
+      newListItems: found
+    });
   });
+
 });
 
 app.post("/", (req, res) => {
-  const item = req.body.newItem;
-  console.log(req.body.list);
-
-  if (req.body.list === "Work") {
-    workItems.push()
-    res.redirect("/work")
-  } else {
-    items.push(item)
-    res.redirect("/")
-  };
-});
-
-app.get("/work", (req, res) => {
-  res.render("list", {
-    listTitle: "Work List",
-    newListItems: workItems
+  let test;
+  const value = req.body.newItem;
+  items.push(test = new Item({
+    name: value
+  }));
+  test.save();
+  res.redirect("/");
+  Item.find({}, (err, found) => {
+    res.render('list', {
+      listTitle: day,
+      newListItems: found
+    });
   });
+
 });
+
 
 app.listen(3000, () => {
   console.log("server running.");
