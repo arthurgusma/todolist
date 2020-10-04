@@ -36,20 +36,12 @@ app.get('/', (req, res) => {
 });
 
 app.post("/", (req, res) => {
-  let test;
   const value = req.body.newItem;
-  items.push(test = new Item({
+  const nameItem = new Item({
     name: value
-  }));
-  test.save();
-  res.redirect("/");
-  Item.find({}, (err, found) => {
-    res.render('list', {
-      listTitle: day,
-      newListItems: found
-    });
   });
-
+  nameItem.save();
+  res.redirect("/");
 });
 
 
