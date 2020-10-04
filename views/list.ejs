@@ -3,8 +3,9 @@
 
 <head>
   <meta charset="utf-8">
-  <title>TO DO LIST</title>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.0/css/all.css" integrity="sha384-OLYO0LymqQ+uHXELyx93kblK5YIS3B2ZfLGBmsJaUyor7CpMTBsahDHByqSuWW+q" crossorigin="anonymous">
   <link rel="stylesheet" href="css/styles.css">
+  <title>TO DO LIST</title>
 </head>
 
 <body>
@@ -13,17 +14,19 @@
   </div>
 
   <div class="box">
-
-    <% newListItems.forEach((obj)=>{   %>
-    <div class="item">
-      <input type="checkbox" name="" value="">
-      <p> <%= obj.name %> </p>
-    </div>
-    <% }); %>
+    <form action="/delete" method="post">
+      <% newListItems.forEach((obj)=>{   %>
+      <div class="item" >
+        <input type="checkbox">
+        <p> <%= obj.name %> </p>
+      <button type="submit" name="listItem" value="<%= obj._id %>"><i class="fas fa-trash-alt" style="color: Mediumslateblue; font-size: 1.5rem;"></i></button>
+      </div>
+      <% }); %>
+    </form>
 
     <form class="item" action="/" method="post">
       <input type="text" name="newItem" placeholder="Add new item">
-      <button type="submit" name="list" value=<%= listTitle %>>+</button>
+      <button type="submit" name="list" value=<%= listTitle %>><i class="fas fa-plus" style="color: Mediumslateblue;"></i></button>
     </form>
   </div>
 

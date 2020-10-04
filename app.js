@@ -16,10 +16,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(express.static("public"));
 
-const itemSchema = {
-  name: String
-};
-
+const itemSchema = {name: String};
 const Item = mongoose.model('Item', itemSchema);
 const items = [];
 
@@ -28,20 +25,27 @@ const day = date.getDate();
 app.get('/', (req, res) => {
   Item.find({}, (err, found) => {
     res.render('list', {
-      listTitle: day,
-      newListItems: found
+      listTitle: day, newListItems: found
     });
   });
 
 });
 
-app.post("/", (req, res) => {
+app.post('/', (req, res) => {
   const value = req.body.newItem;
-  const nameItem = new Item({
-    name: value
-  });
+  const nameItem = new Item({name: value});
   nameItem.save();
-  res.redirect("/");
+  res.redirect('/');
+});
+
+app.post('/delete', (req, res) => {
+  const deletedItem = req.body.listItem;
+  Item.deleteOne({_id: deletedItem}, (err) => {
+    if (err) {
+      console.log(err);
+    } 
+  });
+  res.redirect('/');
 });
 
 
