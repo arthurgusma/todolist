@@ -2,7 +2,7 @@
 ![front page](https://github.com/arthurgusma/todolist/blob/main/images/page.png)
 
 ### I created this web application using these technologies:
-- HTML / CSS
+- HTML / CSS / JS
 - NODEJS (EXPRESS)
 - MONGODB (MONGOOSE)
 
