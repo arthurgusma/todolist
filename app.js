@@ -2,10 +2,11 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const date = require(__dirname + "/date.js");
 const mongoose = require('mongoose');
+require('dotenv').config();
 
 const app = express();
 
-mongoose.connect('mongodb://localhost:27017/todolistDB', {
+mongoose.connect('mongodb+srv://' + process.env.DB_USER + ':' + process.env.DB_PASS + '@cluster0.kz0h8.mongodb.net/todolistDB?retryWrites=true&w=majority', {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
